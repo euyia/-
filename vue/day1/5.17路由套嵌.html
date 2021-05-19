@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="boost/vue.min.js"></script>
+    <script src="vue-router/dist/vue-router.js"></script>
+
+</head>
+<body>
+    <div id="app"></div>
+    
+
+   
+    
+</body>
+<script>var Song={
+    template:`<div>我是歌曲组件</div>`,
+};
+var Movie={
+    template:`<div>我是电影组件</div>`,
+};
+var Home={
+    template:`<div>首页内容<br/>
+        <router-link to='/home/song'>歌曲</router-link>
+    <router-link to='/home/movie'>电影</router-link>
+<router-view></router-view>
+</div>`,//这个首页内容下面 应该还有一堆链接。。song就是home的子级路由。
+};
+
+var router=new VueRouter({
+        routes:[{
+           path:'/home' ,
+           name:'home',
+           component:Home,//这里不要像挂载vue一样。。这里是单数 不是复数。
+           children:[//这个children。。。。是随便定义的吗
+{
+    path:'song',
+    component:Song,
+},{path:'movie',
+component:Movie,//这是把两个小的组件song movie挂上去吧。
+},
+           ]
+        },
+       
+
+        ]
+    });
+    var App={
+        template:`<div><router-link :to="{name:'home'}">首页</router-link>
+        <router-view></router-view></div>`,//这个首页 两个字上就相当于有个超级链接。
+    };//这个用逗号隔开竟然不行。。！！！！
+    new Vue({
+        el:'#app',
+    data(){
+        return{
+
+        }
+    },
+    template:"<App/>",
+        components:{
+            App
+        },
+        router,
+
+    })
+</script>
+</html>

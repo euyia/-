@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+  .vote-box {
+    li {
+      position: relative;
+      margin-top: 4px;
+      background-color: #ccc;
+      .progress {
+        content: '';
+        position: absolute;
+        left: 18px;
+        top: 0;
+        height: 100%;
+      }
+    }
+  }
+    </style>
+</head>
+<body>
+ 
+    <div id="app"></div>
+    <div class="vote-box layui-form">
+        <ul>
+          <li v-for="item in voteList"> // 背景色
+            <div class="progress" :style="randomRgb(item)"></div>  // 前景色
+            <input type="checkbox" name="" :title="item.name" lay-skin="primary">
+          </li>
+        </ul>
+      </div>
+    
+</body>
+<script>
+    Vue.component("Test",{
+        data(){
+            return{
+                    msg:"hello world"
+            }
+        },
+        template:`   <div><div>{{msg}}</div></div>`
+    })
+    var App={
+         data(){
+             return{
+
+             }
+         },
+         template:`  <div class="app">
+            <Test/></div>   `,
+
+    }
+    new Vue({
+        el:"#app",
+        data(){
+	return {
+		voteList: [
+	          {
+	            name: 'A',
+	            num: 12,
+	            total: 24,
+	            bg: '#f00'
+	          }, {
+	            name: 'B',
+	            num: 4,
+	            total: 24,
+	            bg: '#0f0'
+	          }
+	        ]
+	}
+}
+,
+methods: {
+      randomRgb(item) {
+        let R = Math.floor(Math.random() * 255);
+        let G = Math.floor(Math.random() * 255);
+        let B = Math.floor(Math.random() * 255);
+        return {
+          width: (item.num / item.total * 100) + '%', // 进度条
+          background: 'rgb(' + R + ',' + G + ',' + B + ')'
+        };
+      }
+   },
+
+        template:"<App/>",
+        components:{
+            App
+        }
+
+        
+    })
+</script>
+</html>

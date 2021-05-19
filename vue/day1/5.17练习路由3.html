@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><script src="boost/vue.js">
+    </script>
+    <script src="vue-router/dist/vue-router.js"></script>
+</head>
+<body><div id="app"></div>
+
+    
+</body>
+<script>var UserParams={
+    template:`<div>用户1</div>`,
+};
+var UserQuery={
+    template:`<div>用户2</div>`,
+};
+var router=new VueRouter({
+    routes:[
+        {
+            path:'/user/:id',
+            name:'userP',
+            component:UserParams,
+        },
+        
+    {
+        path:'/user',
+        name:'userQ',
+        component:UserQuery,
+    },
+    ]
+});
+    var App={
+        template:` <div><router-link :to="{name:'userP',params:{id:10}}">我是用户1</router-link>
+          <router-link :to="{name:'userQ',query:{userId:2}}">我是用户2</router-link>
+          <router-view></router-view></div>`,
+    };
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+
+            }
+        },
+        router,
+        components:{
+            App
+        },
+        template:'<App/>',
+    })
+</script>
+</html>

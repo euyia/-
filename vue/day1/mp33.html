@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+    
+/*一个项目做完。一个课程学完的时候是思路最清晰的。。需要去总结 巩固这个成果和理解高度。。要记录下来。然后就可以保持一定的高度。
+一个项目反复做。。是很有好处的。。是一个复习的过程 ，因为项目本身就包涵知识点。。这点很重要。。你要的不就是知识点吗。。都在项目里。。
+总结。。和反复做项目。。很重要。。。今天发现冥想很重要。。他会让你保持专注的能力。。很多人。。其实不具有这样的能力。。专注 会让你更有力量。更有的放矢。。
+你可以选择不专注。。但是你必须要有专注的能力。。就像太阳光聚焦一样。。。是会提升破坏力的。
+。。。
+下面还是总结下这个课程的东西。
+这个实例可能是我最近最喜欢的。。可能应该是和音乐有关。。
+这主要是运用了计算属性。。
+我感觉还是很绕。不够简约。。
+他完全可以直接用index的click事件 来直接绑定 和触发系统来执行index对应的songcrc。。。
+class 样式忘记怎么弄了。！！！！！！！！！！！！！！！！！！！！！！！！！！
+如<img src=“ming.bmp”>便是插入名为ming.bmp的图象. 此时SRC是source的简写，意思是“源”即image的源文件为ming.bmp； 原来src是源 的意思。。source  root根
+ * */</script>
+    <style>
+ul li.aaa{ 
+    background-color: aquamarine;
+      width: 40%;
+};
+
+h1.niu{
+    color: blue;
+}
+    </style>
+</head>
+<body><div id="app" class="haha"><!--奇怪中午明明可以这样定义 现在不行了。。！！！！！-->
+    <audio :src="getCurrentSongSrc" autoplay controls></audio><!--。。。还是：src
+    就这个符号理解。你就非常容易做。。还有冒号钱的空格。还有in musicDate前面的空格。-->
+    <ul>
+        <li v-for='(item,index) in musicDate' @click='clickHandler(index)'  :class='{aaa:currentIndex===index}'><!---这个aaa只是个变量，active-->
+            <h2>{{item.id}}-歌名:{{item.name}}</h2>
+            <p>歌手：{{item.author}}</p>
+        </li>
+    </ul>
+    <h1 class="niu">同一个条件来触发两个维度 这种就很有视觉冲击感。这是非常好的一个设计思维,甚至三个维度上属性的变化</h1>
+    <p>其实就是click踢给methods，改变之后。又被computed吸走了。又改变组装。又被src获取。</p>
+    <p> 他首先通过按钮触发 驱到index 传给methods 处理成currentIndex。</p>
+    <br>然后被computed监听到和采用。然后被get重新组装成getcurrentsongsrc。。
+    <br>然后这个值和页面audio控件读取 其实就是这么简单。。
+    <br> 然后还有一个有意思的。。就是：class的true值设定方式。。这个真的是有点天才。。因为他两个都是变量。。
+    <br>但是其实currentIndex和index在下面函数里面 就有同样的作用的一个赋值了。。就是method里面。
+    <br>它其实只不过 把自己的一个按键触发的条件当成了class设定的一个方式。
+    <br>也就是说 它款式的变化 是跟随我们事件触发而触发的。只不过把那个条件，同时又当做款式触发的条件而已，那么其实他就是同步触发了两个效果。。
+    <br>达到一种很美妙的功能和款式同步变化的效果，
+    <br class="san">也就是如果我们以后要同一个条件来触发两个维度 这种就很有视觉冲击感。这是非常好的一个设计思维甚至三个维度上属性的变化。。就可以用这种方法。。<span >也可以是三个维度。</span>
+    <br> 这个设定  我感觉才是这个实例的一个有趣的地方。。而不是计算属性。。
+</div>
+    
+</body>
+<script>
+    var musicDate=[{id:1,name:'于梓贝 - 最爱 (Cover_ 周慧敏)',author:'于梓贝',songSrc:'mp3/于梓贝 - 最爱 (Cover_ 周慧敏).mp3'},
+       {id:2,name:'Tones and I - Dance Monkey',author:'Tones',songSrc:'mp3/Tones and I - Dance Monkey.mp3'},
+       {id:3,name:'The Glitch Mob _ Mako _ The Word Alive - RISE',author:'Glitch',songSrc:'mp3/The Glitch Mob _ Mako _ The Word Alive - RISE.mp3'},
+       {id:4,name:'Deep Side - Booty Music',author:'Deep',songSrc:'mp3/Deep Side - Booty Music.mp3'},
+    ];
+new Vue({
+    el:'#app',
+    data(){
+        return{
+                  musicDate:musicDate,
+                  currentIndex:0
+        }
+    },
+    computed:{
+getCurrentSongSrc:function(){
+    return this.musicDate[this.currentIndex].songSrc//这个组合 就成了函数的值。这个有点怪啊。。。。。。。。。。。这确实有点强势。。
+}
+
+    },
+    methods:{
+        clickHandler(index){
+            this.currentIndex=index;
+        }
+    }
+})
+    
+</script>
+</html>

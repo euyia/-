@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script    src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js">
+/*  生命周期，也就是对dom渲染的整个时机的过程。
+下面这些 的顺序 其实大致可以看做 他们的使用的作用域的从大到小。。递减的。
+他们作用的范围 和条件越来越小。。
+create 和mount 基本差不多都是整个组件还没有出现在dom上。mount在哪个组件目录下。。beforemount 的时候他其实是已经有了。。只是还没有渲染到dom
+mount 没有create那么纯粹。。
+就是这个子组件没有挂到父组件之前 视图的样子。。这其实感觉意义不是很大！！
+然后update 他是更细节的动作 是用button哪个例子说明的。。他比mount更细。。他只是某个事件触发前后的状态。。这里用到innerhtml。按钮点下去的时候同事能检测到
+update前和后的两种状态。。
+销毁前后 例子是那个test组件 这个基本就是用v-if来触发的。。可以复用。。
+后来加入keep-alive之后 就就把原来的销毁效果编程了停用效果。。也就是actived被激活了 和后面的被停用了。deactivated
+这里有三个例子 比较有意思。。一个是button 对于this.msg的反复叠加。methods 什么时候要传变量 什么时候为空？？？？？、
+一个是销毁 那个语句 建立在父组件上。。改变生死。的那个语句。。。他有趣的是 。。在父组件里里面写的语句。。
+其实template就是组件上面的body！！！不同的组件。。只不过是不同个的html的套嵌而已。。。。
+一个组件 其实相当于是一个页面html。。里面要啥啥都有。。！！！！！！！！！！！！！
+template相当于body 。methods相当于方法 脚本。函数。
+
+
+*/
+    </script>
+</head>
+<body>
+
+    <div id="app">
+        <App></App><!--这样写 取代最下面template:"<App/>", 这个就是mounted之前 
+        这个写在这里  不用template  才会优先读取app里的东西-->
+    </div>
+    <input type="button" value="这是input">
+    
+   
+</body>
+
+<script>
+    Vue.component('Test',{
+        data(){
+            return{
+                    msg:"hello world"
+            }
+        },
+        template:` <div><div>{{msg}}</div>
+        <button @click="changeHandler">改变</button>
+        </div>`,
+        methods:{
+            changeHandler(){
+                this.msg=this.msg+'尴尬';
+            }
+        },
+        beforeCreate:function(){
+//组件创建之前  这个一般很少用。。组件创建之前。。能有啥事情
+/* 想不通就像过了。。。beforeCreate。。。这个一样。。不要浪费时间在那发呆。*/
+                               console.log(this.msg)
+                               //这个时候是只有空壳。。。
+                               //但是读取this 是有的？？。里面还没有加载数据。
+        },
+        created:function(){
+                               console.log(this.msg)
+                               /*
+                               这个就经常用 。发起ajax请求。
+                              1 使用该组件就会调用careted方法
+                              2created 可以操作后端的数据，数据驱动视图
+                              3应用：发起ajax请求 保存数据！？*/
+        },
+        beforeMount:function(){
+            console.log(document.getElementById("app"))
+            //这是挂载之后  渲染之前。。也就是东西没有渲染到body上。
+        },
+        mounted:function(){
+            console.log(document.getElementById("app"))
+        },
+        beforeUpdate:function(){
+            //在dom更新之前，调用该狗子。应用：可以获取原始的dom
+            console.log(document.getElementById("app").innerHTML)//加innerHTML就是把APP对象里的文档获取出来 放在控制台上 ，不需要自己在一层层点进去看。
+            //如果没有innerhtml 是直接在中控台获取整个完整的带有标签的app。。这个和mount的区别是个是一个动作。。细节的显示而已。二mouunt是整个组件有没有挂载的区别。整个。。！！
+        },
+        updated:function(){
+            //dom更新只有。应用 ：可以获取最新的dom
+            console.log(document.getElementById("app").innerHTML)
+        },
+        beforeDestroy:function(){
+            //销毁之前
+            console.log('beforeDestroy')
+        },
+        destroyed:function(){
+            console.log('destroyed')
+            //应用 可以销毁定时器 不然一直开着。 
+        },
+        activated:function(){
+                  console.log('组件被激活了')
+        },
+
+        deactivated:function(){
+            console.log('组件被停用了')// 原来的销毁。加上keep之后。。就变成只是被停用！！这个取决于你是不是需要把他缓存 或者要直接销毁。
+            //为什么要这个东西。。和这个东西取决于什么需求。。这种思路。 
+        },
+    })
+    var App={
+         data(){
+             return{
+                     isShow:true
+             }
+         },//为了解决改变生死 反复生成给dom带来的巨大负担。 因为下面那个按钮反复点。他会反复生成销毁。vue弄了个内置组件keep-alive 也就是缓存。
+         //它能在切换过程中 原来的痕迹状态保留在内存中。防止重复渲染dom
+         template:`  <div class="app">
+            <keep-alive><Test v-if="isShow"/></keep-alive>
+            
+            <button @click="isShow=!isShow">改变生死</button>
+            </div>   `,
+            //templata.....我擦
+            //控制组件 对test组件进行销毁。。。要鞋在他的父组件里面。。
+            //但是这个v-if语句厘米没有写如果为假会如何？？？怎么就直接没了？？ 因为他是一个单标签。。所以这样写 意思其实就是不显示这个标签里面的内容
+            //<h1 v-if="awesome">Vue is awesome!</h1> 就像这个。。v-if为真则渲染。v-if为假 这个标签就没有了。。v-shou不行 他只是改变display形态
+
+
+    }
+    new Vue({
+        el:"#app",
+        data(){
+            return {
+
+            }
+        },
+       // template:"<App/>",
+        components:{
+            App
+        }
+
+        
+    })
+</script>
+</html>

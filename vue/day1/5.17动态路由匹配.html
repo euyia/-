@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> <script src="boost/vue.min.js">
+    //想赚钱要参与创业。  一定要多写。。
+    
+    /* 是要一直找。还是在写一遍。。再写一遍是在熟悉一次。
+    冒号加属性就是动态的。。单单属性= 就是静态的
+    数据驱动视图。。你结构不一定要多花哨。。可能是数据不同就能有不同页面的效果。*/</script>
+    <script src="vue-router/dist/vue-router.js"></script>
+
+</head>
+<body>
+    <div id="app"></div> 
+   
+</body>
+<script>
+var ComDesc={
+    data(){
+return{
+    msg:''
+}
+    },
+template:` <div>woshi{{msg}}</div>`,
+created(){
+    this.msg='前端';
+}
+};
+
+
+var Timeline={
+template:`  <div id='timeline'> <router-link :to="{name:'comDesc',params:{id:'frontend'}}">前端</router-link>
+    <router-link :to="{name:'comDesc',params:{id:'backend'}}">后端</router-link>
+    <router-view></router-view>
+    </div>`,//这里给个id有啥用
+};
+var Pins={
+template:`  <div>我是沸点</div>`,
+};
+
+var router= new VueRouter({
+routes:[
+    {
+        path:'/timeline',// 这个前后端都在用 是共用的组件。。。。。。。。。。。。。
+        component:Timeline,
+        children:[
+{
+name:'comDesc',
+//动态路由参数 以冒号开头。
+path:'/timeline/:id',
+component:ComDesc,
+},
+        ],
+    },
+    {
+        path:'/pins',
+        component:Pins,
+    },
+]
+});
+    var App={
+        template:`<div><router-link to='/timeline'>首页</router-link>
+        <router-link to='/pins'>沸点</router-link>
+        <router-view></router-view></div>`,//渲染到这个路由的出口。。。这个要闭合！错了多少次了！！！！！！！！！！！！！！！！！！！！！！！
+
+    };
+    new Vue({
+        el:'#app',
+        router,
+        template:'<App/>',
+        components:{
+            App
+        }
+    })
+</script>
+</html>

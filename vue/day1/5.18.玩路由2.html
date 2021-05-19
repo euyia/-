@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue/vue.js"></script>
+    <script src="vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+  
+</body>
+<script>//目标要集中清晰  
+//有没有什么快捷键能往回跳几格
+var L3={
+    template:`<div>3楼第一组</div>`,
+};
+
+
+var V3={
+    template:`<div>3楼第二组</div>`,
+};
+
+var L2={
+    template:`<div>2楼第一组</div>`,
+};
+
+
+var V2={
+    template:`<div>2楼第二组<br> <div><router-link :to="{name:'l3',params:{id:'limin'}}"></router-link>
+    <router-link :to="{name:'v3',params:{id:'shaoyun'}}"></router-link>
+<router-view></router-view></div></div>`,
+};
+var L1={
+    template:`<div>1楼第一组<div><router-link to='/li/l2'>要写L2</router-link>
+        <router-link to='/li/v2'>要写V2</router-link>
+    <router-view></router-view></div></div>`,//这个to里面是路径要写完整 不能单单写本级的。
+};
+
+
+var V1={
+    template:`<div>1楼第二组</div>`,
+};
+var router=new VueRouter({
+    routes:[
+        {
+            path:'/l1',
+            component:L1,
+            children:[
+                {path:'/li/l2',
+                component:L2,
+
+                },
+                {path:'/li/v2',
+                component:V2,
+                 liu:[
+                     {
+                         name:'l3',
+                         path:'l1/l2/:id',
+                         componete:L3,
+                     },
+                     {
+                        name:'v3',
+                         path:'l1/l2/:id',
+                         componete:V3, 
+                     },
+                 ],
+                    
+                },
+            ],
+        },
+        {
+            path:'/v1',
+            component:V1,
+        },
+    ]
+    
+});
+    var App={
+template:`<div><router-link to='/l1'>要写L1</router-link>
+        <router-link to='/v1'>要写V1</router-link>
+    <router-view></router-view></div>`,//这个router-link中间不写文字 就按钮。
+    };
+    new Vue({
+        el:'#app',
+        router,
+        components:{
+            App
+        },
+        template:'<App/>',
+    })
+</script>
+</html>

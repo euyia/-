@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .default{}
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    
+</body>
+<script>Vue.component('Vbtn',{
+    template:`<div> <button class='default'><slot></slot></button></div>`,
+    //有slot 就可以在后面重载button的内容。。
+});
+var Vcontent={
+    template:`<div>我是内容组件<Vbtn>主要按钮</Vbtn>
+        <Vbtn>成功按钮</Vbtn>
+        </div>`
+}
+    //创建子组件 三步 。
+    //声子
+    var App={
+        template:'<div><Vcontent/></div>',
+        components:{
+            Vcontent
+        }
+    };
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+
+            }
+        },
+        components:{//挂子
+            App
+        },
+        //用子
+        template:'<App/>'
+    })
+</script>
+<script>
+    //这个是全局组件的创建，，前面就是第一个参数 是他的名字id。第二个是options 中文选项。
+    //这个很好用 可以随便挂载就可以用了。
+    
+</script>
+</html>

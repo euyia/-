@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title><script src="vue/vue.js">/*
+    组件通信的6种方式。props$emit是最常用 然后还是$bus 中央事件总裁 那个兄弟传也常用
+    0.20分左右的视频开始就说的很清晰。。
+    。。。现在想学路由。。
+    先有雏形 再迭代。。。。别刚开始就像都会。。核心需求会就可以了。
+    */
+
+    </script>
+</head>
+<body>
+ 
+    <div id="app"></div>
+</body>
+<script>
+    Vue.component("Test",{
+        data(){
+            return{
+                    msg:"hello world"
+            }
+        },
+        template:`   <div><div>{{msg}}</div></div>`
+    })
+    var App={
+         data(){
+             return{
+
+             }
+         },
+         templata:`  <div class="app">
+            <Test/></div>   `,
+
+    }
+    new Vue({
+        el:"#app",
+        data(){
+            return {
+
+            }
+        },
+        template:"<App/>",
+        components:{
+            App
+        }
+
+        
+    })
+</script>
+</html>
