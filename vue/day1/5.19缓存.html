@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> <script src="boost/vue.min.js">
+    //走生命周期的方法
+    //生命周期用的比较多的 ed的。。也就是之后 之后</script>
+    <script src="vue-router/dist/vue-router.js"></script>
+
+</head>
+<body>
+    <div id="app"></div> 
+ 
+   
+</body>
+<script>
+
+var Timeline={
+template:`  <div id='timeline'> 
+    </div>`,//这里给个id有啥用
+    created(){
+        console.log('首页组件创建了');
+    },
+    mounted(){
+        console.log('首页组件渲染了，也就是dom加载了')
+    },
+    destroyed(){
+        console.log('首页组件销毁了')//为啥这个销毁没有触发。？？？？？？？
+    },
+};
+var Pins={
+template:`  <div> <h3 @click='clickHandler'>我是沸点</h3></div>`,//这个不需要加括号吗。。
+methods:{
+     clickHandler(e){
+         e.target.style.color='red';//这边为什么要用分号！！！！！！。。用逗号都不行》？？？
+
+     },
+},
+created(){
+        console.log('沸点组件创建了');
+    },
+    mounted(){
+        console.log('沸点组件渲染了，也就是dom加载了')
+    },
+    destroyed(){//果然又拼写错了。。ro和or
+        console.log('沸点组件销毁了')
+    },
+};
+
+var router= new VueRouter({
+routes:[
+    {
+        path:'/timeline',// 这个前后端都在用 是共用的组件。。。。。。。。。。。。。
+        component:Timeline,
+   
+    },
+    {
+        path:'/pins',
+        component:Pins,
+    },
+]
+});
+    var App={
+        template:`<div><router-link to='/timeline'>首页</router-link>
+        <router-link to='/pins'>沸点</router-link>
+          <keep-alive><router-view></router-view></keep-alive></div>`,//渲染到这个路由的出口。。。这个要闭合！错了多少次了！！！！！！！！！！！！！！！！！！！！！！！
+// 把这个路由出口 用keep包裹起来 就走缓存的。。不是走销毁的。。按键痕迹就能保存起来。。
+    };
+    new Vue({
+        el:'#app',
+        router,
+        template:'<App/>',
+        components:{
+            App
+        }
+    })
+</script>
+</html>

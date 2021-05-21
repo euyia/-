@@ -24,9 +24,17 @@ return{
     msg:''
 }
     },
-template:` <div>woshi{{msg}}</div>`,
-created(){
-    this.msg='前端';
+template:` <div>我是{{msg}}</div>`,
+//created(){
+   // this.msg='';
+//},
+watch:{'$route'(to,from){// 就是当前组件内部，监测那个url路由信息的变化。
+    console.log(to);
+    console.log(from);
+    //发送ajax请求
+    this.msg=to.params.id;
+}
+
 }
 };
 

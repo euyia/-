@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="boost/vue.js">
+    //前面是时间名称，后面是事件的内容。这里pval就是。代码就是要方便理解啊。。语言不简单的话。。那就是差评的语言。</script>
+</head>
+<body>
+    <div id="app"><h1>加法</h1>
+        <add-method :a='2' :b='1' v-on:add_event='getAddResult'></add-method>
+          <hr>
+          <h3>{{result}}
+
+          </h3>
+    </div>
+  
+</body>
+<script>
+    Vue.component('add-method',{
+        porps:['a','b'],
+        template:`<div><button @click='add'>加加</button></div>`,
+        methods:{//这边又少一个s。。很多刚开始写都是
+            add(){
+                var value = 0;
+                value = this.a+this.b;
+                this.$emit('add_event',{//这个大括号 就是子组件给父组件传递的内容。前面那个是推送的名字。 通过这个发射给父组件   这个是重点。。
+                    result:value
+                })
+            }
+        }
+    });
+    var App=new Vue({
+        el:'#app',
+        data:{
+             result: 0
+            
+        },
+        methods:{//通过这个事件 对子组件传过来的pval内容 进行处理。。然后输出。
+             getAddResult(pval){//这种长的函数名字。。可以多看下。。不然就直接复制
+                           this.result=pval.result;
+             }
+        },
+    });
+</script>
+</html>

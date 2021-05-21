@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> <script src="boost/vue.min.js">
+    //走生命周期的方法   拿着它去玩一下。
+    //生命周期用的比较多的 ed的。。也就是之后 之后</script>
+    <script src="vue-router/dist/vue-router.js"></script>
+
+</head>
+<body>
+    <div id="app">
+    <router-link to='/home'>首页</router-link>
+    <router-link to='/blog'>我的博客</router-link>
+   <!-- <router-link to='/login'>登录</router-link>-->
+    <!--老师这个标签没闭合。。地下一堆人在笑。。他是你们老师啊。。你们确定这么没心没肺吗-->
+    <a href="javascript:void(0)">退出</a>
+    <router-view></router-view>
+    
+   </div> 
+ 
+</body>
+<script>Vue.use(VueRouter);//局部的话 要挂载router下面编程式跳转要用到 全局的话好像不用
+    var Login={
+        data(){
+            return{
+                name:'',
+                pwd:'',
+            }
+
+        },
+        template:`  
+    <div><input type="text" v-model="name">
+    <input type="password" v-model="pwd">
+    <input type="button" value='登录' @click='loginHandler'></div>
+ `,
+ methods:{
+     loginHandler(){
+         //登录
+         localStorage.setItem('user',{name:this.name,pwd:this.pwd});
+
+         //重新跳转到博客页面
+         //编程式跳转
+         this.$router.push({
+             //放对象
+             name:'blog', // 有区别于下面的path /login应用。。这里用name的方式。。
+
+         })
+     }
+
+ },
+
+    };
+var  Home={
+    template:`<div>我是首页</div>`,
+};
+var  Blog={
+    template:`<div>我是博客</div>`,
+};
+
+
+var router= new VueRouter({
+routes:[
+    {
+        path:'/',
+        redirect:'/home',// 重定向
+       
+   
+    },
+    {
+        path:'/home',
+        component:Home,
+    },
+    {
+        path:'/blog',
+        component:Blog,
+        name:'blog',
+        //这个是给未来的路由 做权限控制。
+        meta:{
+           //证明用户访问该组件的时候需要登录。
+           auth:true
+        }
+    },
+    {
+        path:'/login',
+        component:Login,
+    },
+]
+});
+router.beforeEach((to,from,next)=>{//这个老师也是抄的。。= > 组合起来的。
+console.log(to);
+console.log(from);
+
+if(to.meta.auth){
+    //用户点击了博客链接，该用户需要登录。
+    //则跳转到登录页面。
+    if(localStorage.getItem('user')){//localstorage不为空 则直接放行。
+        ////这个是为了防止登录之后。。进入博客 还是显示登录页面 对于用户登录信息是否有值 来判断是否有登陆。 1.04
+         next()
+    }else{
+        next({//大括号 放对象   直接放path
+             path:'/login'
+    })
+
+    }
+    
+
+}else{//如果为false则直接放行
+next();//如果不用next 页面会卡住！！！！！！！！！！！！！！
+}
+});
+   
+    new Vue({
+        el:'#app',
+        router,
+       
+    })
+</script>
+</html>

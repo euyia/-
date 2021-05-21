@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="boost/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-button-group label="时间">
+            <el-button  @click="seeHour" :type="buttonhour"  >时</el-button>
+            <el-button  @click="seeDay"  :type="buttonday"  >天</el-button>
+            <el-button  @click="seeMonth" :type="buttonmonth" >月</el-button>
+      </el-button-group>
+    </div>
+</body>
+<script>
+    new Vue({
+        el:'#app',
+       data() {
+    return {
+      buttonhour:'primary',
+      buttonday:'',
+      buttonmonth:'',
+}
+},
+        methods:{
+            seeHour() {
+          this.showDay=false;
+          this.showHour=true;
+          this.showMonth=false;
+          this.buttonhour='primary';
+          this.buttonday='';
+          this.buttonmonth='';
+   },
+   seeDay() {
+          this.showDay=true;
+          this.showHour=false;
+          this.showMonth=false;
+          this.buttonday='primary';
+          this.buttonhour='';
+          this.buttonmonth='';
+   },
+   seeMonth() {
+         this.showDay=false;
+         this.showHour=false;
+         this.showMonth=true;
+         this.buttonmonth='primary';
+         this.buttonday='';
+         this.buttonhour='';
+   }
+
+        },
+
+    })
+</script>
+</html>
