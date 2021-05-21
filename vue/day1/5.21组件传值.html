@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="boost/vue.js">
+
+    </script>
+</head>
+<body>
+    <div id="app">
+        <ll :a='2' :b='3' @li='cc'></ll>
+        <br>
+        <p>{{result}}</p>
+        
+    </div>
+</body>
+<script>//思维的腔体越大 越通透？和嘴巴的腔体类似？
+    Vue.component('ll',{
+        props:['a','b'],
+        template:`<div><button @click='gg'>gggg</button></div>`,
+        methods:{
+            gg(){
+                var value=this.a+this.b;
+                this.$emit('li',{
+                    result:value
+                })
+            }
+        }
+
+    });
+    var App=new Vue({
+        el:'#app',//#要写啊。
+        data(){
+            return{
+                result:0
+            }
+        },
+        methods:{
+            cc(x){
+                this.result=x.result;
+            }
+        }
+    })
+</script>
+</html>
