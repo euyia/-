@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="boost/vue.min.js">
+/* 感觉还是太绕了。各种绑定。。那为什么不直接在脚本那边赋值就好了？？
+还要绕来绕去。。不蛋疼吗。
+就像跑图一样。。这个图给跑个一百遍呗。
+github上面下的项目。。为什么跑不起来。没有跑成功过一个？？？？？
+绕的越多。。限制就越多。。这个语言就越僵硬。。
+*/
+    </script>
+</head>
+<body>
+    <div id="app">
+        <ll :a='1' :b='2' @add_event="get"></ll>
+        <br>
+        <h3>{{result}}</h3>
+        
+    </div>
+</body>
+<script>Vue.component('ll',{//这里一定要和那个按钮一个名字吗 是的 。。为什么。。为了接受props吧。。
+    props:['a','b'],//上面的绑定 就是为了能够从中取值。也就是信息。
+    //：a 为什么能写在 标签里面。。。？？？也就是说 名字是可以乱写的。。属性 也是可以自己定的。。a.b。cd 皆可为为元素变量。。
+    //子组件也是个变量。。？
+ template:`<div><button @click='gg'>ddd</button></div>`,//重写一下就变成ddd了。原来要写sss的
+methods:{
+    gg(){
+        var value
+        =this.a+this.b;
+        this.$emit('add_event',{//这边的this.都是指vue这个实例。
+            result:value
+        })
+    }
+}
+})
+    var App=new Vue({
+        el:'#app',
+        data(){
+            return{
+               result:0//这里为什么不能用等号。。/?/、
+            }
+        },
+        methods:{
+            get(x){
+                this.result=x.result
+
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="boost/vue.min.js">
+    /* 先写 。然思维沉淀一下。。 就是借助一些原生的稳定关系。。来作为线索和标记。
+    很简单。。核心就是子组件的props 和$emit 接受和发射 和父组件自定义的事件来当做线索。
+    1通过过子组件的prop去获取父组件的信息 
+    2父组件中设置一个自定义的事件
+    3然后通过只组件的一个时间 去发射内容。。以父组件的自定义时间的名字为线索
+    4父组件通过自己自定义的时间触发的method。通过传值。也就是自变量就是
+    代表了子组件传递过来的内容。。然后通过mthod函数方法 进行接受 和再处理。*/</script>
+</head>
+<body>
+    <div id="shuaiGe">
+    <add-method :a='10' :b='20' @cl='nihao'></add-method>
+    <p>{{result}}</p></div>
+
+</body>
+<script>
+    Vue.component('add-method',{
+        props:['a','b'],//这个为什么一定要。。
+        data(){
+            return{
+                result:0
+            }
+        },
+        template:`<div><button @click='niyehao'>gogogo</button>
+    
+</div>`,
+        methods:{
+            niyehao(){
+                var value=0;
+                value=this.a+this.b;
+                this.$emit('cl',{
+                    result:value  //这边不用this。。。。吗？？？上面一定要用add-method吗。。。？div 要分开。。要闭合那些元素。。。。。！！
+                //这里为啥不用等号。
+                })
+            }
+        }
+    })
+    var App=new Vue({
+        el:'#shuaiGe',
+        data(){
+            return{
+
+            }
+        },
+        methods:{
+            nihao(x){
+                this.result=x.result;
+
+            }
+        }
+    })
+</script>
+</html>

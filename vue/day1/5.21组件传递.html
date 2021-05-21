@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="boost/vue.js">
+    <script src="boost/vue.min.js">
     //前面是时间名称，后面是事件的内容。这里pval就是。代码就是要方便理解啊。。语言不简单的话。。那就是差评的语言。</script>
 </head>
 <body>
-    <div id="app"><h1>加法</h1>
+    <div id="myApp"><h1>加法</h1>
         <add-method :a='2' :b='1' v-on:add_event='getAddResult'></add-method>
           <hr>
           <h3>{{result}}
@@ -20,7 +20,7 @@
 </body>
 <script>
     Vue.component('add-method',{
-        porps:['a','b'],
+        props:['a','b'],//百分80以上都是拼写错误。。。。。。。。。。。。。。。。。！！！！！！！！！！！！
         template:`<div><button @click='add'>加加</button></div>`,
         methods:{//这边又少一个s。。很多刚开始写都是
             add(){
@@ -32,10 +32,10 @@
             }
         }
     });
-    var App=new Vue({
-        el:'#app',
+    var myApp=new Vue({
+        el:'#myApp',
         data:{
-             result: 0
+             result: 0//这个为什么定义在这里。而不是再子组件。？？？？
             
         },
         methods:{//通过这个事件 对子组件传过来的pval内容 进行处理。。然后输出。
