@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "vector": "cpp",
+    "string": "cpp",
+    "tuple": "cpp",
+    "queue": "cpp",
+    "stack": "cpp",
+    "ostream": "cpp",
+    "unordered_map": "cpp",
+    "iostream": "cpp",
+    "scoped_allocator": "cpp"
+  }
+}

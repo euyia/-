@@ -1,0 +1,36 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ debug",
+            "command": "/usr/bin/g++",
+            // "args": [
+            //     "-g",
+            //     "${file}",
+            //     "-o",
+            //     "${fileDirname}/${fileBasenameNoExtension}"
+            // ],
+            "args": ["-g","-Wall","-std=c++11","${file}","-o","${fileDirname}/${fileBasenameNoExtension}"],//编译命令参数
+
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        },
+        // 下面是为了调试能cin 添加的
+        {
+            "label": "Open Terminal",
+            "type": "shell",
+            "command": "osascript -e 'tell application \"Terminal\"\ndo script \"echo hello\"\nend tell'",
+            "problemMatcher": []
+          }
+    ],
+    "version": "2.0.0"
+}
