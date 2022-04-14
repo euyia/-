@@ -3,11 +3,16 @@
 #include <unordered_map>
 #include <bits/stdc++.h>
 using namespace std;
-bool cmp = [&](string a, string b)
+bool cmp(string a, string b)
 {
     return a + b > b + a;
-} int
-main()
+    // 这里其实就是赤裸裸的翻译。。
+    // 把题目要求直接翻译到cmp规则。。。
+    // 可以间的 这cmp的规则定义。。。。。非常强大。。灵活
+    // 可以间的 这cmp的规则定义。。。。。非常强大。。灵活
+    // 可以间的 这cmp的规则定义。。。。。非常强大。。灵活
+};
+int main()
 {
     cin >> n;
     string a[n + 1];
