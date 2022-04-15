@@ -23,6 +23,10 @@
     "filesystem": "cpp",
     "cstdio": "cpp",
     "random": "cpp",
-    "__string": "cpp"
+    "__string": "cpp",
+    "iomanip": "cpp",
+    "ios": "cpp",
+    "istream": "cpp",
+    "locale": "cpp"
   }
 }
